@@ -1,0 +1,35 @@
+1=> Kullanýcý kayýt sistemi yazýlacak.
+2=> Kullanýcý kayýt sistemi üzerinden kayt olduðu zaman E-Mail gönderilmesini saðlayan bir sistem yaratýlacak. Bu sistem kullanýcýya bir aktivasyon E-Mail'i gönderecek. Kullanýcý bu E-Mail'e týkladýðý zaman üyeliði onaylanacak. Bu üyelik onaylanmadan kullanýcý üye olarak sisteme giriþ yapamayacak.
+3=> Kullanýcý siteye ilk girdiði anda alýþveriþ sitesine düþecek. Ýsterse üye olmadan da alýþveriþ yapabilecek, isterse önce üye de olacak. Sepetine buradan ürünleri atabilecek.
+4=> Sepetini gözlemleyen kullanýcý ürünlerin sipariþini verebilecek.
+5=> Bankaya API üzerinden baðlanarak kullanýcýnýn kredi kartý bilgilerinin verify ettireceðiz.
+6=> Verify onaylandýktan sonra sipariþ SQL'e eklenecek.
+7=> Kullanýcýlarýn vermiþ olduðu sipariþler admin panelinden izlenebilsin.
+
+---------------------------------------------------------------------------------------------------------------------------------------
+
+
+1-) Proje N-Tier mimari paternine göre yazýlacaktýr.
+2-) Projede Code First yöntemi kullanýlacaktýr.
+3-) Projede Türkçe karakter kullanýlmayacaktýr.
+4-) Proje class isimleri tekil ve PascalCase olacaktýr, field isimleri _ sembolü ile baþlayýp camelCase olacaktýr, Property isimleri PascalCase olacaktýr, local variable camaelCase olacaktýr, metotlar PascalCase olacaktýr.
+5-) Projede kullanýlacak Design(Dizayn) Patterns : Singleton, GenericRepository, Strategy Patternler kullanýlacak.
+			Singleton = Projede veritabaný sýnýfý üzerinde kullanýlacaktýr. Veritabaný sýnýfýndan sadece 1 instance alýp sürekli bu instance'i kullanacaðýz, birden fazla instance almaya gerek yok.
+			GenericRepository = Kiþiselleþtirmek istedðimiz iþlemleri ilgili sýnýflar için belirli çatýlar açarak bu depolar üzerinden kullanmak adýna yaptýðýmýz algoritmaya destek veren bir tasarým patternidir.
+			Strategy = Yaratacaðýmýz veritabanýna ayný zamanda yaratýlýrken veriler eklemek için ekleyeceðimiz verilerin planýný bir baþka class'ta düzenleyip veritabaný sýnýfýmýzýn bu bloðu çaðýrmasýný istediðimizden dolayý kullandýðýmýz bir tasarým patternidir.
+6-) Katman isimleri Project ile baþlayacak . sembolünden sonra katmansal takýlarýn birleþmesiyle oluþacaktýr.
+7-) Projede açýlacak katmanlar :
+	ENTITIES,
+	MAP,
+	DAL,
+	BLL,
+	COMMON(Ortak kullanýlacak sýnýflarýn tutulduðu katman olacaktýr. [Þifreleme sýnýfý, Mail gönderme sýnýfý, Resim yükleme sýnýfý] ),
+	DTO(Data Table Object sýnfýý [Api'daki esnekliðimizin proje bazlý artmasý için açacaðýmýz katmandýr.]),
+	API(Projemizi dýþarý açmak istediðimiz zamanlar için hazýr bulunacak ayrý bir katmandýr.),
+	MVCUI(Set as Startup Project olarak ayarlýyoruz. Çünkü buradan çalýþmasýný istiyoruz, ConnectionString buradan baþlayacak.)
+8-) Mevcut algoritmada 5. maddede bahsedilen Design Patternler'in dýþýnda baþka bir Tasarým Paterni ön görülmemiþtir. Mevcut tasarým paternleri N-Tier Mimari ile tam uyum saðlamaktadýr. Ancak projenin esneklði buna elveriþli olduðunda eðer çok gerekli görülürse N-Tier ile uyumlu çalýþan diðer Tasarým Patternler'i rahatça eklenebilir.
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
+=> MVCUI'daki ConsumeDTO; API Consume ve API Creation için oluþturduk. API Creation; API yaratmak demektir. API Consume; var olan bir API'ý kullanmak demektir. Kendi yarattýðýmýz API katmaný dýþýnda , banka ile ödeme iþlemlerinde haberleþmek için(sanal pos entegrasyonu) bankanýn yazdýðý bir API'ý kullancaðýz ve bunuda ConsumeDTO klasörü içerisinde yapacaðýz. 
+=> OuterTools'a template yükledim.
